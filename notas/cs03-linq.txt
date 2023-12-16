@@ -1,0 +1,8 @@
+C# - Conceptos (Migración desde Java) - LINQ
+********************************************
+
+LINQ significa Language-Integrated Query, esto es, consulta integrada al lenguaje. Consiste de instrucciones de manejo de colecciones en C# que pueden hacerse de forma muy similar al lenguaje SQL o de forma funcional.
+
+
+
+

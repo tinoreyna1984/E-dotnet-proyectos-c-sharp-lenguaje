@@ -1,0 +1,190 @@
+C# - Conceptos (Migración desde Java) - POO
+*******************************************
+
+Clase
+=====
+
+public class HelloWorld
+{
+	public string Mensaje {set; get;} // esto se conoce como propiedad autoimplementada
+	public HelloWorld(string Mensaje)
+	{
+		this.Mensaje = Mensaje;
+	}
+	public void Saludo()
+	{
+		Console.WriteLine(Mensaje);
+	}
+}
+
+Las propiedades autoimplementadas se llaman así porque automáticamente se implementan setters y getters en la declaración de las mismas.
+
+Clase abstracta
+===============
+
+public abstract class Figura
+{
+	public abstract double Perimetro();
+	public abstract double Area();
+}
+
+Interfaz
+========
+
+public interface IFigura
+{
+	public string QuienSoy();
+}
+
+Herencia e implementación de interfaces
+=======================================
+
+Herencia:
+
+public class Cuadrilatero : Figura
+{
+	public double Base {get; set;}
+	public double Altura {get; set;}
+	public override double Area()
+	{
+		return Base * Altura;
+	}
+
+	public override double Perimetro()
+	{
+		return 0.00;
+	}
+}
+
+Implementar la interfaz IFigura:
+
+public class Cuadrado : Cuadrilatero, IFigura
+{
+	public double Lado {get; set;}
+	public Cuadrado(double Lado)
+	{
+		this.Lado = Lado;
+	}
+	public override double Area()
+	{
+		return Math.Pow(Lado, 2);
+	}
+
+	public override double Perimetro()
+	{
+		return 4 * Lado;
+	}
+
+	public string QuienSoy()
+	{
+		return "Soy un cuadrado";
+	}
+}
+
+Notar que para herencia e implementación se usa el mismo operador. En algunos otros lenguajes, se usaría extends e implements.
+
+
+Namespaces
+==========
+
+Declaración del namespace
+-------------------------
+
+namespace Figuras
+{
+    public abstract class Figura
+    {
+        public abstract double Perimetro();
+        public abstract double Area();
+    }
+
+    public interface IFigura
+    {
+        public string QuienSoy();
+    }
+}
+
+Uso
+---
+
+using Figuras; // <----------------
+
+namespace Cuadrilateros
+{
+    public class Cuadrilatero : Figura
+    {
+        public double Base {get; set;}
+        public double Altura {get; set;}
+        public override double Area()
+        {
+            return Base * Altura;
+        }
+
+        public override double Perimetro()
+        {
+            return 0.00;
+        }
+    }
+
+    // ...
+}
+
+Clases parciales
+================
+
+Refiere a varias clases con el mismo nombre que pueden conformar una sola clase. Estas pueden declararse en varios archivos. Ejemplo:
+
+PartialClass1.cs:
+
+using System;
+
+namespace PartialClasses
+{
+    public partial class PartialClass
+    {
+        public void HelloWorld()
+        {
+            Console.WriteLine("Hello, world!");
+        }
+    }
+}
+
+PartialClass2.cs:
+
+using System;
+
+namespace PartialClasses
+{
+    public partial class PartialClass
+    {
+        public void HelloUniverse()
+        {
+            Console.WriteLine("Hello, universe!");
+        }
+    }
+}
+
+En el programa:
+
+using System;
+
+namespace PartialClasses
+{
+    class Program
+    {
+    static void Main(string[] args)
+    {
+        PartialClass pc = new PartialClass(); // solo se declara una vez para las dos clases parciales
+        pc.HelloWorld();
+        pc.HelloUniverse();
+    }
+    }
+}
+
+
+
+
+
+
+
+

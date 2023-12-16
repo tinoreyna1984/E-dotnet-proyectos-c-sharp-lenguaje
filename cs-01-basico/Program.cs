@@ -1,0 +1,269 @@
+﻿// Fuente: https://csharp.net-tutorials.com/Localization/LanguageStatus/es/
+
+// See https://aka.ms/new-console-template for more information
+
+using System.Text; // para clases como StringBuilder, por ejemplo
+using System.Text.RegularExpressions;
+
+
+// deshabilita warnings molestosos
+#pragma warning disable CS0168
+#pragma warning disable IDE0079
+#pragma warning disable IDE0090
+#pragma warning disable IDE0057
+#pragma warning disable IDE0028
+#pragma warning disable SYSLIB1045
+
+
+Console.WriteLine("Hola, mundo!");
+
+// 1- Variables y constantes
+int valorEntero = 10;
+Console.WriteLine("Valor entero: " + valorEntero);
+const double PI = 3.14159;
+Console.WriteLine("PI: " + PI);
+bool abierto = true;
+Console.WriteLine("abierto: " + Convert.ToString(abierto));
+
+// 2- Operaciones
+int valor01 = 2, valor02 = 3;
+int suma = valor01 + valor02;
+Console.WriteLine("Suma: " + suma);
+
+// 3- Métodos libres
+static void MuestraSuma(int val01, int val02 = 0){
+    Console.WriteLine("MuestraSuma: " + (val01 + val02));
+}
+MuestraSuma(1);
+MuestraSuma(3,6);
+static int Sumar(int val01, int val02 = 0){
+    return val01 + val02;
+}
+Console.WriteLine("Sumar: " + Sumar(1));
+Console.WriteLine("Sumar: " + Sumar(5,3));
+
+// 4- Condicionales
+bool presente = false;
+if(presente)
+    Console.WriteLine("Flag presente");
+else
+    Console.WriteLine("Flag ausente");
+int edad = 39;
+if(edad < 25)
+    Console.WriteLine("Verifica edad: estás chibolo");
+else if(edad >= 25 && edad < 40)
+    Console.WriteLine("Verifica edad: estás mayorcito");
+else
+    Console.WriteLine("Verifica edad: estás tío");
+double rating = 3;
+switch(rating){
+    case 1:
+    case 2:
+        Console.WriteLine("Rating bajo");
+        break;
+    case 3:
+    case 4:
+        Console.WriteLine("Rating mediano");
+        break;
+    case 5:
+        Console.WriteLine("Rating óptimo");
+        break;
+    default:
+        Console.WriteLine("Valor no aplicable");
+        break;
+}
+
+// 5- Arreglos
+int[] enteros = {2, 3, 4, 5};
+Console.WriteLine("Un valor entero del arreglo: " + enteros[2]);
+
+// 6- Bucles
+// while, do-while, for son como cualquier otro lenguaje conocido
+// C# tiene su foreach:
+foreach(int entero in enteros){
+    Console.WriteLine("Valor actual: " + entero);
+}
+
+// 7- Tipados especiales
+// tipado dinámico
+dynamic valorDinamico = 10;
+Console.WriteLine("Valor dinámico aquí: " + valorDinamico);
+valorDinamico = "ahora soy una cadena";
+Console.WriteLine("Valor dinámico aquí: " + valorDinamico);
+// tipado anónimo (no se puede poner valores de otro tipo de dato)
+var valorImplicito = 20;
+Console.WriteLine("Valor implícito aquí: " + valorImplicito);
+
+// 8- Colecciones
+// List: similar al List de Java
+List<int> listaUno = new List<int>();
+listaUno.Add(2);
+listaUno.Add(5);
+listaUno.Add(10);
+listaUno.Add(6);
+foreach(int val in listaUno)
+{
+    Console.WriteLine(val);
+}
+Console.WriteLine("**********");
+List<int> listaDos = new List<int>()
+{
+    3, 4, 8, 10, 23
+};
+foreach(int val in listaDos)
+{
+    Console.WriteLine(val);
+}
+// ordenamientos
+listaUno.Sort(); // ordena ascendentemente
+foreach(int val in listaUno)
+{
+    Console.WriteLine(val);
+}
+Console.WriteLine("**********");
+listaDos.Reverse(); // ordena descendentemente
+foreach(int val in listaDos)
+{
+    Console.WriteLine(val);
+}
+// Diccionario: similar a Map de Java
+Dictionary<string, int> users = new Dictionary<string, int>();  
+users.Add("John Doe", 42);  
+users.Add("Jane Doe", 38);  
+users.Add("Joe Doe", 12);  
+users.Add("Jenna Doe", 12);
+Console.WriteLine("John Doe tiene " + users["John Doe"] + " años");
+Dictionary<string, int> users02 = new Dictionary<string, int>()
+{
+    { "John Doe", 42 },
+    { "Jane Doe", 38 },
+    { "Joe Doe", 12 },
+    { "Jenna Doe", 12 }
+};
+foreach (KeyValuePair<string, int> user in users02) // KeyValuePair<string, int> es el tipo especial de elemento de un Diccionario
+{
+    Console.WriteLine(user.Key + " is " + user.Value + " years old");
+}
+
+// 9- Fechas
+// Instancia de fecha
+DateTime dt = new DateTime();
+Console.WriteLine(dt.ToString()); // 01-01-0001 00:00:00 (???)
+// Fecha actual
+DateTime hoy = DateTime.Now;
+Console.WriteLine(hoy.ToString()); // 13/12/2023 21:10:46 (momento de la ejecución, puede cambiar)
+// Valor de fecha
+DateTime fecha = new DateTime(2042, 12, 24);
+Console.WriteLine(fecha.ToString());
+// Valor de hora
+DateTime fh = new DateTime(2042, 12, 24, 18, 42, 0);
+Console.WriteLine(fh.ToString()); // fecha y hora
+DateTime extraeFecha = fh.Date;
+Console.WriteLine(extraeFecha.ToString()); // extrae fecha
+TimeSpan extraeHora = fh.TimeOfDay;
+Console.WriteLine(extraeHora.ToString()); // extrae hora
+
+// 10- Cadenas y expresiones regulares
+// Cadenas
+string cadena = "Esto es una cadena de ejemplo";
+Console.WriteLine(cadena);
+Console.WriteLine(cadena.Substring(0,18)); // Esto es una cadena
+Console.WriteLine(cadena.Substring(0,18).Replace("una", "otra")); // Esto es otra cadena
+// StringBuilder: trabajar cadenas de forma mutable
+StringBuilder sb = new StringBuilder("Hola, mundo, soy una instancia de StringBuilder");
+Console.WriteLine(sb);
+string sbAsignado = sb.ToString();
+Console.WriteLine(sbAsignado);
+sb.AppendLine(", soy mutable");
+Console.WriteLine(sb); // Hola, mundo, soy una instancia de StringBuilder, soy mutable
+// Regex
+// Forma básica de match
+string testString = "John Doe, 42 years";
+Regex regex = new Regex("[0-9]+");
+if (regex.IsMatch(testString))
+    Console.WriteLine("String contains numbers!");
+else
+    Console.WriteLine("String does NOT contain numbers!");
+// Forma alternativa de match
+string testString02 = "John Doe, 42 years";
+Regex regex02 = new Regex("[0-9]+");
+Match match = regex02.Match(testString02);
+if (match.Success)
+    Console.WriteLine("Number found: " + match.Value);
+
+// 11- Enums
+/*namespace Name
+{
+    public enum  DiaDeLaSemana {lunes, martes, miercoles, jueves, viernes, sabado, domingo}
+    class Program {
+        static void Main(string[] args)
+        {
+            DiaDeLaSemana dia = DiaDeLaSemana.lunes;
+            Console.WriteLine(dia);
+        }
+    }
+}*/
+
+// 12- Estructuras
+/*class Program
+{
+    static void Main(string[] args)
+    {
+        Car car;
+
+        car = new Car("Blue");
+        Console.WriteLine(car.Describe());
+
+        car = new Car("Red");
+        Console.WriteLine(car.Describe());
+
+        Console.ReadKey();
+    }
+}
+
+struct Car
+{
+    private string color;
+
+    public Car(string color)
+    {
+        this.color = color;
+    }
+
+    public string Describe()
+    {
+        return "This car is " + Color;
+    }
+
+    public string Color
+    {
+        get { return color; }
+        set { color = value; }
+    }
+}*/
+
+// 13- Manejo de excepciones (try-catch-finally)
+int[] numbers = new int[2];
+try
+{
+    numbers[0] = 23;
+    numbers[1] = 32;
+    numbers[2] = 42;
+
+    foreach(int i in numbers)
+    Console.WriteLine(i);
+}
+catch(IndexOutOfRangeException ex)
+{
+    Console.WriteLine("An index was out of range!");
+}
+catch(Exception ex)
+{
+    Console.WriteLine("Some sort of error occured: " + ex.Message);
+}
+finally
+{
+    Console.WriteLine("It's the end of our try block. Time to clean up!");
+}
+// Console.ReadLine();
+Console.WriteLine("***************************************************************************!");
